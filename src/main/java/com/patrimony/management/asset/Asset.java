@@ -1,23 +1,34 @@
 package com.patrimony.management.asset;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
+@Document(collection = "asset")
 public class Asset {
+    @Id
     private String id;
     private String name;
     private Date date;
-    private double initialValue;
+    private double initial_value;
     private String company;
-    private double interestRate;
-    private boolean isActive;
+    private double interest_rate;
+    private boolean is_active;
+    private String username;
 
-    public Asset(String name, Date date, double initialValue, String company, double interestRate, boolean isActive) {
+    protected Asset() {
+
+    }
+
+    public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active, String username) {
         this.name = name;
         this.date = date;
-        this.initialValue = initialValue;
+        this.initial_value = initial_value;
         this.company = company;
-        this.interestRate = interestRate;
-        this.isActive = isActive;
+        this.interest_rate = interest_rate;
+        this.is_active = is_active;
+        this.username = username;
     }
 
     public String getId() {
@@ -32,20 +43,52 @@ public class Asset {
         return date;
     }
 
-    public double getInitialValue() {
-        return initialValue;
+    public double getInitial_value() {
+        return initial_value;
     }
 
     public String getCompany() {
         return company;
     }
 
-    public double getInterestRate() {
-        return interestRate;
+    public double getInterest_rate() {
+        return interest_rate;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isIs_active() {
+        return is_active;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setInitial_value(double initial_value) {
+        this.initial_value = initial_value;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setInterest_rate(double interest_rate) {
+        this.interest_rate = interest_rate;
+    }
+
+    public void setIs_active(boolean is_active) {
+        this.is_active = is_active;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -54,10 +97,10 @@ public class Asset {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", date=" + date +
-                ", initialValue=" + initialValue +
+                ", initialValue=" + initial_value +
                 ", company='" + company + '\'' +
-                ", interestRate=" + interestRate +
-                ", isActive=" + isActive +
+                ", interestRate=" + interest_rate +
+                ", isActive=" + is_active +
                 '}';
     }
 }
