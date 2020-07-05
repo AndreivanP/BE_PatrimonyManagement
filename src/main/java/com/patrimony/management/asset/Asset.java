@@ -18,7 +18,6 @@ public class Asset {
     private String username;
 
     protected Asset() {
-
     }
 
     public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active, String username) {
