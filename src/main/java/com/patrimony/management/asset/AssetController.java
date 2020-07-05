@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AssetController {
@@ -16,13 +17,35 @@ public class AssetController {
     private AssetRepository assetRepository;
 
     @GetMapping("users/{username}/assets")
-    public List<Asset> getAllUserAssets(@PathVariable String username) {
+    public List<Asset> getAllAssets(@PathVariable String username) {
         return assetRepository.findByUsername(username);
+    }
+
+    @GetMapping("users/{username}/assets/{id}")
+    public  ResponseEntity<Asset> getAsset(@PathVariable String username, @PathVariable String id) {
+        List<Asset> assetO = assetRepository.findStringById(id);
+        if(assetO.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(assetO.get(0), HttpStatus.OK);
+        }
     }
 
     @PostMapping("users/{username}/assets")
     public ResponseEntity<Asset> createAsset(@PathVariable String username, @RequestBody Asset asset) {
         asset.setUsername(username);
-        return new ResponseEntity<Asset>(assetRepository.save(asset), HttpStatus.CREATED);
+        return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("users/{username}/assets/{id}")
+    public ResponseEntity<Asset> deleteAsset(@PathVariable String username, @PathVariable String id) {
+        assetRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("users/{username}/assets/{id}")
+    public ResponseEntity<Asset> updateAsset(@PathVariable String username, @PathVariable(value="id") String id, @RequestBody Asset asset) {
+        asset.setUsername(username);
+        return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.OK);
     }
 }
