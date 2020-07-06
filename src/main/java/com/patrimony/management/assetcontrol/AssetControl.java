@@ -5,58 +5,58 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(collection = "control_asset")
+@Document(collection = "asset_control")
 public class AssetControl {
     @Id
     private String id;
-    private String asset_id;
-    private Date control_date;
-    private double current_value;
+    private String assetId;
+    private Date controlDate;
+    private double currentValue;
 
     protected AssetControl() {
     }
 
-    public AssetControl(String asset_id, Date control_date, double current_value) {
-        this.asset_id = asset_id;
-        this.control_date = control_date;
-        this.current_value = current_value;
+    public AssetControl(String assetId, Date controlDate, double currentValue) {
+        this.assetId = assetId;
+        this.controlDate = controlDate;
+        this.currentValue = currentValue;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getAsset_id() {
-        return asset_id;
+    public String getAssetId() {
+        return assetId;
     }
 
-    public void setAsset_id(String asset_id) {
-        this.asset_id = asset_id;
+    public void setAssetId(String assetId) {
+        this.assetId = assetId;
     }
 
-    public Date getControl_date() {
-        return control_date;
+    public Date getControlDate() {
+        return controlDate;
     }
 
-    public void setControl_date(Date control_date) {
-        this.control_date = control_date;
+    public void setControlDate(Date controlDate) {
+        this.controlDate = controlDate;
     }
 
-    public double getCurrent_value() {
-        return current_value;
+    public double getCurrentValue() {
+        return currentValue;
     }
 
-    public void setCurrent_value(double current_value) {
-        this.current_value = current_value;
+    public void setCurrentValue(double currentValue) {
+        this.currentValue = currentValue;
     }
 
     @Override
     public String toString() {
         return "AssetControl{" +
                 "id='" + id + '\'' +
-                ", assetId='" + asset_id + '\'' +
-                ", controlDate=" + control_date +
-                ", currentValue=" + current_value +
+                ", assetId='" + assetId + '\'' +
+                ", controlDate=" + controlDate +
+                ", currentValue=" + currentValue +
                 '}';
     }
 }
