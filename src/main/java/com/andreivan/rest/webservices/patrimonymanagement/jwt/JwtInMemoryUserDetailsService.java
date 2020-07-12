@@ -1,4 +1,4 @@
-package com.jwt;
+package com.andreivan.rest.webservices.patrimonymanagement.jwt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,11 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
     static List<JwtUserDetails> inMemoryUserList = new ArrayList<>();
 
     static {
+        inMemoryUserList.add(new JwtUserDetails(1L, "in28minutes",
+                "$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_USER_2"));
+
         inMemoryUserList.add(new JwtUserDetails(1L, "Andreivan",
-                "$2a$10$QnKkRnrBdySZ/z2mWe.0bODkdUU6pRoAYlAG5HNUqxEYT1RRSsEL.", "ROLE_USER_2"));
+                "$2a$10$27dEXMwVNf4RT60NyNjR/.P1wOZoH3n2.QEip/UixSbYiuB26Xvyu", "ROLE_USER_2"));
     }
 
     @Override

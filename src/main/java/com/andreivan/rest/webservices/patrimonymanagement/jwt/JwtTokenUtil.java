@@ -1,4 +1,4 @@
-package com.jwt;
+package com.andreivan.rest.webservices.patrimonymanagement.jwt;
 
 import java.io.Serializable;
 import java.util.Date;

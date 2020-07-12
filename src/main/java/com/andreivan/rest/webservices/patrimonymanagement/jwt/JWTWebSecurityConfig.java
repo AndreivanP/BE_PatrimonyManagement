@@ -1,4 +1,4 @@
-package com.jwt;
+package com.andreivan.rest.webservices.patrimonymanagement.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +41,6 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(jwtInMemoryUserDetailsService)
                 .passwordEncoder(passwordEncoderBean());
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoderBean() {

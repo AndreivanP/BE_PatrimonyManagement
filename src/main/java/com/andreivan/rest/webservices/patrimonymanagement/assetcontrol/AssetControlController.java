@@ -1,7 +1,7 @@
-package com.patrimony.management.assetcontrol;
+package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
-import com.patrimony.management.asset.Asset;
-import com.patrimony.management.asset.AssetRepository;
+import com.andreivan.rest.webservices.patrimonymanagement.asset.Asset;
+import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

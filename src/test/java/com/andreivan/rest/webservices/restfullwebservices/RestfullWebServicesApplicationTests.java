@@ -1,10 +1,10 @@
-package com.patrimony.management;
+package com.andreivan.rest.webservices.restfullwebservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ManagementApplicationTests {
+class RestfullWebServicesApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,4 +1,4 @@
-package com.jwt;
+package com.andreivan.rest.webservices.patrimonymanagement.jwt;
 
 import java.util.ArrayList;
 import java.util.Collection;

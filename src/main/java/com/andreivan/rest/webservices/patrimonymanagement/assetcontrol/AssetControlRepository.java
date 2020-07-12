@@ -1,7 +1,8 @@
-package com.patrimony.management.assetcontrol;
+package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
 import java.util.Date;
 import java.util.List;
 

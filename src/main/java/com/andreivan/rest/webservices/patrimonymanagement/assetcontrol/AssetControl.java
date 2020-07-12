@@ -1,4 +1,4 @@
-package com.patrimony.management.assetcontrol;
+package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

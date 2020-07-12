@@ -1,4 +1,4 @@
-package com.jwt.resource;
+package com.andreivan.rest.webservices.patrimonymanagement.jwt.resource;
 
 import java.io.Serializable;
 
@@ -8,6 +8,10 @@ public class  JwtTokenRequest implements Serializable {
 
     private String username;
     private String password;
+
+//    {
+//        "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbjI4bWludXRlcyIsImV4cCI6MTU5MjE0NTI1OSwiaWF0IjoxNTkxNTQwNDU5fQ.-bvwoIO6Kz07q3SQumaxTf145Qk2l_iJbbQ_rPKHAlxsP6_aduQUmzmbWd8B62l20nTkUIta0Oxd1nbRjAyLzQ"
+//    }
 
     public JwtTokenRequest() {
         super();

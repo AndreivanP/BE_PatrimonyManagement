@@ -1,9 +1,10 @@
-package com.patrimony.management.asset;
+package com.andreivan.rest.webservices.patrimonymanagement.asset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class AssetController {
     }
 
     @GetMapping("users/{username}/assets/{id}")
-    public  ResponseEntity<Asset> getAsset(@PathVariable String username, @PathVariable String id) {
+    public ResponseEntity<Asset> getAsset(@PathVariable String username, @PathVariable String id) {
         List<Asset> assetO = assetRepository.findStringById(id);
         if(assetO.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
