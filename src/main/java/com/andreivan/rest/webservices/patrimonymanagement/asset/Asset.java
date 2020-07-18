@@ -1,4 +1,4 @@
-package com.patrimony.management.asset;
+package com.andreivan.rest.webservices.patrimonymanagement.asset;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,7 +18,6 @@ public class Asset {
     private String username;
 
     protected Asset() {
-
     }
 
     public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active, String username) {
