@@ -16,11 +16,13 @@ public class Asset {
     private double interest_rate;
     private boolean is_active;
     private String username;
+    private double current_value;
+    private boolean is_variable_income;
 
     protected Asset() {
     }
 
-    public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active, String username) {
+    public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active, String username, double current_value, boolean is_variable_income) {
         this.name = name;
         this.date = date;
         this.initial_value = initial_value;
@@ -28,6 +30,8 @@ public class Asset {
         this.interest_rate = interest_rate;
         this.is_active = is_active;
         this.username = username;
+        this.current_value = current_value;
+        this.is_variable_income = is_variable_income;
     }
 
     public String getId() {
@@ -88,6 +92,22 @@ public class Asset {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getCurrent_value() {
+        return current_value;
+    }
+
+    public void setCurrent_value(double current_value) {
+        this.current_value = current_value;
+    }
+
+    public boolean isIs_variable_income() {
+        return is_variable_income;
+    }
+
+    public void setIs_variable_income(boolean is_variable_income) {
+        this.is_variable_income = is_variable_income;
     }
 
     @Override
