@@ -116,10 +116,13 @@ public class Asset {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", date=" + date +
-                ", initialValue=" + initial_value +
+                ", initial_value=" + initial_value +
                 ", company='" + company + '\'' +
-                ", interestRate=" + interest_rate +
-                ", isActive=" + is_active +
+                ", interest_rate=" + interest_rate +
+                ", is_active=" + is_active +
+                ", username='" + username + '\'' +
+                ", current_value=" + current_value +
+                ", is_variable_income=" + is_variable_income +
                 '}';
     }
 }
