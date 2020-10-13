@@ -19,8 +19,8 @@ public class AssetController {
         return assetRepository.findByUsername(username);
     }
 
-    @GetMapping("users/{username}/assets/{id}")
-    public ResponseEntity<Asset> getAsset(@PathVariable String username, @PathVariable String id) {
+    @GetMapping("assets/{id}")
+    public ResponseEntity<Asset> getAsset(@PathVariable String id) {
         List<Asset> assetO = assetRepository.findStringById(id);
         if(assetO.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -35,15 +35,14 @@ public class AssetController {
         return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("users/{username}/assets/{id}")
-    public ResponseEntity<Asset> deleteAsset(@PathVariable String username, @PathVariable String id) {
+    @DeleteMapping("assets/{id}")
+    public ResponseEntity<Asset> deleteAsset(@PathVariable String id) {
         assetRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("users/{username}/assets/{id}")
-    public ResponseEntity<Asset> updateAsset(@PathVariable String username, @PathVariable(value="id") String id, @RequestBody Asset asset) {
-        asset.setUsername(username);
+    @PutMapping("assets/{id}")
+    public ResponseEntity<Asset> updateAsset(@PathVariable(value="id") String id, @RequestBody Asset asset) {
         return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.OK);
     }
 }
