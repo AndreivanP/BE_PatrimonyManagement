@@ -3,6 +3,7 @@ package com.andreivan.rest.webservices.patrimonymanagement.asset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,16 @@ public class AssetController {
     @GetMapping("users/{username}/assets")
     public List<Asset> getAllAssets(@PathVariable String username) {
         return assetRepository.findByUsername(username);
+    }
+
+    @GetMapping("users/{username}/assets/current-total")
+    public double getTotalValue(@PathVariable String username) {
+        List<Asset> assets = assetRepository.findByUsername(username);
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getCurrent_value();
+        }
+        return total;
     }
 
     @GetMapping("users/{username}/assets/{id}")
