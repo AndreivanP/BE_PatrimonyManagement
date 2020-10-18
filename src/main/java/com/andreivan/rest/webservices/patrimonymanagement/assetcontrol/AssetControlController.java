@@ -1,6 +1,7 @@
 package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
 import com.andreivan.rest.webservices.patrimonymanagement.asset.Asset;
+import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetController;
 import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,15 +21,23 @@ public class AssetControlController {
     @Autowired
     private AssetRepository assetRepository;
 
-    @PostMapping("/assets-control")
-    public ResponseEntity<AssetControl> createAssetControl(@RequestBody AssetControl assetControl) {
-        List<Asset> assetID = assetRepository.findStringById(assetControl.getAssetId());
-        List<AssetControl> controlDate = assetControlRepository.findDateByControlDate(assetControl.getControlDate());
-        if(assetID.isEmpty() || !controlDate.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.CREATED);
+    public double getTotalValue2(String username) {
+        List<Asset> assets = assetRepository.findByUsername(username);
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getCurrent_value();
         }
+        return total;
+    }
+
+    @PostMapping("users/{username}/assets-control")
+    public ResponseEntity<AssetControl> createAssetControl(@PathVariable String username) {
+            AssetControl assetControl = new AssetControl();
+            assetControl.setControlDate(new Date());
+            assetControl.setCurrentValue(getTotalValue2(username));
+            assetControl.setUsername(username);
+
+        return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/assets-control/{id}")
@@ -44,16 +54,6 @@ public class AssetControlController {
     @GetMapping("/assets-control")
     public ResponseEntity<List<AssetControl>> getAllAssetsControl() {
         return new ResponseEntity<>(assetControlRepository.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/assets-control/asset/{id}")
-    public ResponseEntity<List<AssetControl>> getAssetsControlForSpecificAsset(@PathVariable String id) {
-        List<Asset> asset = assetRepository.findStringById(id);
-        if(asset.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(assetControlRepository.findByAssetId(id, Sort.by(Sort.Direction.DESC, "controlDate")), HttpStatus.OK);
-        }
     }
 
     @GetMapping("/assets-control/{id}")

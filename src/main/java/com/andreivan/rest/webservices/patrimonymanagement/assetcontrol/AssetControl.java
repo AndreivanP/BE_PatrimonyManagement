@@ -9,29 +9,21 @@ import java.util.Date;
 public class AssetControl {
     @Id
     private String id;
-    private String assetId;
     private Date controlDate;
-    private double currentValue;
+    private double currentTotalValue;
+    private String username;
 
-    protected AssetControl() {
+    public AssetControl() {
     }
 
-    public AssetControl(String assetId, Date controlDate, double currentValue) {
-        this.assetId = assetId;
+    public AssetControl(Date controlDate, double currentValue, String username) {
         this.controlDate = controlDate;
-        this.currentValue = currentValue;
+        this.currentTotalValue = currentValue;
+        this.username = username;
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getAssetId() {
-        return assetId;
-    }
-
-    public void setAssetId(String assetId) {
-        this.assetId = assetId;
     }
 
     public Date getControlDate() {
@@ -43,20 +35,28 @@ public class AssetControl {
     }
 
     public double getCurrentValue() {
-        return currentValue;
+        return currentTotalValue;
     }
 
     public void setCurrentValue(double currentValue) {
-        this.currentValue = currentValue;
+        this.currentTotalValue = currentValue;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
     public String toString() {
         return "AssetControl{" +
                 "id='" + id + '\'' +
-                ", assetId='" + assetId + '\'' +
                 ", controlDate=" + controlDate +
-                ", currentValue=" + currentValue +
+                ", currentTotalValue=" + currentTotalValue +
+                ", username='" + username + '\'' +
                 '}';
     }
 }
