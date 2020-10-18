@@ -30,7 +30,7 @@ public class AssetControlController {
         return total;
     }
 
-    @PostMapping("user/{username}/assets-control")
+    @PostMapping("users/{username}/assets-control")
     public ResponseEntity<AssetControl> createAssetControl(@PathVariable String username) {
             AssetControl assetControl = new AssetControl();
             assetControl.setControlDate(new Date());
