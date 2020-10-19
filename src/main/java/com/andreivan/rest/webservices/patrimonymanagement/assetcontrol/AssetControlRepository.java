@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface AssetControlRepository extends MongoRepository<AssetControl, String> {
     List<AssetControl> findStringById(String id);
+    List<AssetControl> findByUsername(String username);
 }
