@@ -3,10 +3,14 @@ package com.andreivan.rest.webservices.patrimonymanagement.asset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -21,13 +25,22 @@ public class AssetController {
     }
 
     @GetMapping("users/{username}/assets/current-total")
-    public double getTotalValue(@PathVariable String username) {
+    public Map<String, Double> getTotalValue(@PathVariable String username) {
+        HashMap<String, Double> map = new HashMap<>();
         List<Asset> assets = assetRepository.findByUsername(username);
         double total = 0;
+        double totalVariableIncome = 0;
         for (Asset asset : assets) {
             total += asset.getCurrent_value();
+            if(asset.isIs_variable_income()){
+                totalVariableIncome += asset.getCurrent_value();
+            }
         }
-        return total;
+        DecimalFormat df = new DecimalFormat("#.00");
+        map.put("current_total", Double.valueOf(df.format(total)));
+        map.put("variable_income_total", Double.valueOf(df.format(totalVariableIncome)));
+        map.put("variable_income_percent", Double.valueOf(df.format(totalVariableIncome / total * 100)));
+        return map;
     }
 
     @GetMapping("users/{username}/assets/{id}")
