@@ -7,6 +7,7 @@ import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,10 @@ public class AssetController {
                 totalVariableIncome += asset.getCurrent_value();
             }
         }
-        map.put("current_total", total);
-        map.put("variable_income_total", totalVariableIncome);
+        DecimalFormat df = new DecimalFormat("#.00");
+        map.put("current_total", Double.valueOf(df.format(total)));
+        map.put("variable_income_total", Double.valueOf(df.format(totalVariableIncome)));
+        map.put("variable_income_percent", Double.valueOf(df.format(totalVariableIncome / total * 100)));
         return map;
     }
 
