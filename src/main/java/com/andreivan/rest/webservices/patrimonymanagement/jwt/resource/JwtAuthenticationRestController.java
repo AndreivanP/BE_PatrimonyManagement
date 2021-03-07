@@ -25,7 +25,7 @@ import com.andreivan.rest.webservices.patrimonymanagement.jwt.JwtTokenUtil;
 import com.andreivan.rest.webservices.patrimonymanagement.jwt.JwtUserDetails;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")

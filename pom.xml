@@ -9,14 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.andreivan.rest.webservices</groupId>
-	<artifactId>restful-web-services</artifactId>
+	<artifactId>patrimonymanagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>restful-web-services</name>
-	<description>Demo project for Spring Boot</description>
-
-	<properties>
-		<java.version>11</java.version>
-	</properties>
+	<name>patrimonymanagement</name>
+	<description>Patrimony Management App</description>
 
 	<dependencies>
 		<dependency>
