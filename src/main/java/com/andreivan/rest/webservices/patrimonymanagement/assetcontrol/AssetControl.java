@@ -9,16 +9,16 @@ import java.util.Date;
 public class AssetControl {
     @Id
     private String id;
-    private Date control_date;
-    private double current_total_value;
+    private Date controlDate;
+    private double currentTotalValue;
     private String username;
 
     public AssetControl() {
     }
 
-    public AssetControl(Date control_date, double current_total_value, String username) {
-        this.control_date = control_date;
-        this.current_total_value = current_total_value;
+    public AssetControl(Date controlDate, double currentTotalValue, String username) {
+        this.controlDate = controlDate;
+        this.currentTotalValue = currentTotalValue;
         this.username = username;
     }
 
@@ -26,20 +26,20 @@ public class AssetControl {
         return id;
     }
 
-    public Date getControl_date() {
-        return control_date;
+    public Date getControlDate() {
+        return controlDate;
     }
 
-    public void setControl_date(Date control_date) {
-        this.control_date = control_date;
+    public void setControlDate(Date controlDate) {
+        this.controlDate = controlDate;
     }
 
-    public double getCurrent_total_value() {
-        return current_total_value;
+    public double getCurrentTotalValue() {
+        return currentTotalValue;
     }
 
-    public void setCurrent_total_value(double current_total_value) {
-        this.current_total_value = current_total_value;
+    public void setCurrentTotalValue(double currentTotalValue) {
+        this.currentTotalValue = currentTotalValue;
     }
 
     public String getUsername() {
@@ -54,8 +54,8 @@ public class AssetControl {
     public String toString() {
         return "AssetControl{" +
                 "id='" + id + '\'' +
-                ", controlDate=" + control_date +
-                ", currentTotalValue=" + current_total_value +
+                ", controlDate=" + controlDate +
+                ", currentTotalValue=" + currentTotalValue +
                 ", username='" + username + '\'' +
                 '}';
     }

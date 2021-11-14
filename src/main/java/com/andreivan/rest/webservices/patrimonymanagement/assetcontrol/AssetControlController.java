@@ -32,8 +32,8 @@ public class AssetControlController {
     @PostMapping("users/{username}/assets-control")
     public ResponseEntity<AssetControl> createAssetControl(@PathVariable String username) {
             AssetControl assetControl = new AssetControl();
-            assetControl.setControl_date(new Date());
-            assetControl.setCurrent_total_value(getTotalValue2(username));
+            assetControl.setControlDate(new Date());
+            assetControl.setCurrentTotalValue(getTotalValue2(username));
             assetControl.setUsername(username);
             return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.CREATED);
     }
@@ -56,9 +56,16 @@ public class AssetControlController {
     }
 
     @GetMapping("users/{username}/assets-control")
-    public ResponseEntity<List<AssetControl>> getAllAssetsControl(@PathVariable String username) {
+    public ResponseEntity<List<AssetControl>> getAllAssetsControl(@PathVariable String username,
+                                                                  @RequestParam(required = false, name = "since") Date since,
+                                                                  @RequestParam(required = false, name = "till") Date till) {
         List<AssetControl> assetControl = assetControlRepository.findByUsername(username);
-        return new ResponseEntity<>(assetControlRepository.findAll(Sort.by(Sort.Direction.DESC, "control_date")), HttpStatus.OK);
+
+        if(since != null && till != null) {
+            return new ResponseEntity<>(assetControlRepository.findByControlDateBetween(since, till), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(assetControlRepository.findAll(Sort.by(Sort.Direction.DESC, "controlDate")), HttpStatus.OK);
+        }
     }
 
     @GetMapping("/assets-control/{id}")
