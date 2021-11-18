@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +61,8 @@ public class AssetControlController {
         List<AssetControl> assetControl = assetControlRepository.findByUsername(username);
 
         if(since != null && till != null) {
-            return new ResponseEntity<>(assetControlRepository.findByControlDateBetween(since, till), HttpStatus.OK);
+            Sort sort = Sort.by(Sort.Direction.DESC, "controlDate");
+            return new ResponseEntity<>(assetControlRepository.findByControlDateBetween(since, till, sort), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(assetControlRepository.findAll(Sort.by(Sort.Direction.DESC, "controlDate")), HttpStatus.OK);
         }
