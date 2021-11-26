@@ -33,5 +33,5 @@ jobs:
             environment_name: Assetmanagmentapp-env
             version_label: ${{github.SHA}}
             region: us-east-1
-            deployment_package: target/asset-management-api-1.0.1.jar
+            deployment_package: target/asset-management-api-1.0.2.jar
             use_existing_version_if_available: true
