@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.andreivan.rest.webservices</groupId>
 	<artifactId>patrimonymanagement</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>patrimonymanagement</name>
 	<description>Patrimony Management App</description>
 
@@ -64,7 +64,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>asset-management-api</finalName>
+		<finalName>asset-management-api-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
