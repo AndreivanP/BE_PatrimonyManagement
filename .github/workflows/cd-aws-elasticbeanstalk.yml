@@ -21,7 +21,7 @@ jobs:
 
       - name: Set up Database Production Url
         run: |
-        cd src/main/resources && sed -i 's/mongodb/pat_manag/Andreivan:asd123@ec2-54-85-159-102.compute-1.amazonaws.com/pat_manag_production/g' application.properties
+          cd src/main/resources && sed -i 's/mongodb/pat_manag/Andreivan:asd123@ec2-54-85-159-102.compute-1.amazonaws.com/pat_manag_production/g' application.properties
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v13
