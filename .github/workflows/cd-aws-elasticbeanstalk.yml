@@ -28,8 +28,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: asset-managment-app
-          environment_name: Assetmanagmentapp-env-stg
+          application_name: asset-managment-app-stg
+          environment_name: Assetmanagmentapp-stg-env
           version_label: ${{github.SHA}}
           region: us-east-1
           deployment_package: target/asset-management-api-1.0.2.jar
