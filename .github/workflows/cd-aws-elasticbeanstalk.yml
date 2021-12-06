@@ -5,38 +5,38 @@ on:
     branches: [ master ]
 
 jobs:
-  staging:
-    runs-on: ubuntu-latest
+#   staging:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11.0.1
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up JDK 11
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: 11.0.1
 
-      - name: Set up Database STG Url
-        run: |
-          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb://Andreivan:asd123@ec2-3-230-126-185.compute-1.amazonaws.com/pat_manag_production#g" application.properties
-          cat application.properties
+#       - name: Set up Database STG Url
+#         run: |
+#           cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb://Andreivan:asd123@ec2-3-230-126-185.compute-1.amazonaws.com/pat_manag_production#g" application.properties
+#           cat application.properties
 
-      - name: Build with Maven
-        run: mvn package -DskipTests --file pom.xml
+#       - name: Build with Maven
+#         run: mvn package -DskipTests --file pom.xml
 
-      - name: Deploy to EB STG
-        uses: einaregilsson/beanstalk-deploy@v13
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: asset-managment-app-stg
-          environment_name: Assetmanagmentapp-stg-env
-          version_label: ${{github.SHA}}
-          region: us-east-1
-          deployment_package: target/asset-management-api-1.0.2.jar
-          use_existing_version_if_available: true
+#       - name: Deploy to EB STG
+#         uses: einaregilsson/beanstalk-deploy@v13
+#         with:
+#           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           application_name: asset-managment-app-stg
+#           environment_name: Assetmanagmentapp-stg-env
+#           version_label: ${{github.SHA}}
+#           region: us-east-1
+#           deployment_package: target/asset-management-api-1.0.2.jar
+#           use_existing_version_if_available: true
 
   production:
-    needs: staging
+#     needs: staging
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +48,7 @@ jobs:
 
       - name: Set up Database Production Url
         run: |
-          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb://Andreivan:asd123@ec2-54-85-159-102.compute-1.amazonaws.com/pat_manag_production#g" application.properties
+          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb://Andreivan:asd123@ec2-3-209-161-108.compute-1.amazonaws.com/pat_manag_production#g" application.properties
           cat application.properties
 
       - name: Build with Maven
