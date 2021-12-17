@@ -5,22 +5,22 @@ on:
     branches: [ master ]
 
 jobs:
-#   build-deploy-stg-env:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Set up Database STG Url
-#         run: |
-#           cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=${{secrets.STG_DB_URL}}#g" application.properties
-#       - name: Deploy to Heroku STG Environment
-#         uses: AkhileshNS/heroku-deploy@v3.8.8
-#         with:
-#           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-#           heroku_email: ${{secrets.HEROKU_EMAIL}}
-#           heroku_app_name: ${{secrets.HEROKU_APP}}
+  build-deploy-stg-env:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Database STG Url
+        run: |
+          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=${{secrets.STG_DB_URL}}#g" application.properties
+      - name: Deploy to Heroku STG Environment
+        uses: AkhileshNS/heroku-deploy@v3.8.8
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: ${{secrets.HEROKU_APP}}
 
   build-deploy-prod-env:
-#     needs: build-deploy-stg-env
+    needs: build-deploy-stg-env
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
