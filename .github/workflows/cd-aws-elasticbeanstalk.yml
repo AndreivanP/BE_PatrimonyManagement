@@ -2,7 +2,7 @@ name: Deploy API Layer to AWS Elastic Beanstalk
 
 on:
   push:
-    branches: [ master ]
+    branches: [ disabled ]
 
 jobs:
   staging:

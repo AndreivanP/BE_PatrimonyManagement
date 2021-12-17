@@ -1,0 +1,37 @@
+name: Deploy API Layer to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches: [ disabled ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.1
+          
+      - name: Set up Database STG Url
+        run: |
+          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb://Andreivan:asd123@ec2-3-230-126-185.compute-1.amazonaws.com/pat_manag_production#g" application.properties
+          cat application.properties
+
+      - name: Build with Maven
+        run: mvn package -DskipTests --file pom.xml
+  
+      - name: Deploy to EB STG
+        uses: einaregilsson/beanstalk-deploy@v13
+        with:
+            aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            application_name: asset-managment-app
+            environment_name: Assetmanagmentapp-env-stg
+            version_label: ${{github.SHA}}
+            region: us-east-1
+            deployment_package: target/asset-management-api-1.0.2.jar
+            use_existing_version_if_available: true
