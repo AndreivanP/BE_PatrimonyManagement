@@ -5,14 +5,14 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-deploy-stg-env:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Database STG Url
         run: |
           cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb+srv://Andreivan:asd123@asset-app-prod.w8mhh.mongodb.net/pat_manag_stg#g" application.properties
-      - uses: actions/checkout@v2
-      - name: Deploy to Heroku
+      - name: Deploy to Heroku STG Env
         uses: AkhileshNS/heroku-deploy@v3.8.8
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
