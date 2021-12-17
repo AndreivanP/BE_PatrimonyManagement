@@ -17,7 +17,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: ${{secrets.HEROKU_APP}}
+          heroku_app_name: ${{secrets.API_STG_ASSET_HEROKU_NAME}}
 
   build-deploy-prod-env:
     needs: build-deploy-stg-env
@@ -32,4 +32,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: ${{secrets.HEROKU_APP_PROD}}
+          heroku_app_name: ${{secrets.API_PROD_ASSET_HEROKU_NAME}}
