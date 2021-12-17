@@ -9,6 +9,6 @@
 # COPY . ${WORKDIR}/
 
 FROM openjdk:11
-ADD target/asset-management-api.jar asset-management-api.jar
-ENTRYPOINT ["java", "-jar","asset-management-api.jar"]
+ADD target/asset-management-api-1.0.2.jar asset-management-api-1.0.2.jar
+ENTRYPOINT ["java", "-jar","asset-management-api-1.0.2.jar"]
 EXPOSE 8080
