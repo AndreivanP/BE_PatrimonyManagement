@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Database STG Url
         run: |
-          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=mongodb+srv://Andreivan:asd123@asset-app-prod.w8mhh.mongodb.net/pat_manag_stg#g" application.properties
+          cd src/main/resources && sed -i "s#spring.data.mongodb.uri=mongodb://mongodb/pat_manag#spring.data.mongodb.uri=${{secrets.STG_DB_URL}}#g" application.properties
       - name: Deploy to Heroku STG Env
         uses: AkhileshNS/heroku-deploy@v3.8.8
         with:
