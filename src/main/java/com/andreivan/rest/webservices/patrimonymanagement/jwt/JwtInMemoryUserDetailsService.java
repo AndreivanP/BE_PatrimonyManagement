@@ -16,13 +16,13 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
 
     static {
         inMemoryUserList.add(new JwtUserDetails(1L, "Juca",
-                "$2a$10$D56Y5Gi8bGzecpswUgh8uezei8fG3UmSL12A8Mumd7QsX9j9Txb3a", "ROLE_USER_2"));
+                "$2a$10$aJNhFWv/lK606iyQ43tmdOtxC7Z7nT5NkGQMZWLVmw187pYWoOdyG", "ROLE_USER_2"));
 
         inMemoryUserList.add(new JwtUserDetails(1L, "Staging",
-                "$2a$10$D56Y5Gi8bGzecpswUgh8uezei8fG3UmSL12A8Mumd7QsX9j9Txb3a", "ROLE_USER_2"));
+                "$2a$10$aJNhFWv/lK606iyQ43tmdOtxC7Z7nT5NkGQMZWLVmw187pYWoOdyG", "ROLE_USER_2"));
 
         inMemoryUserList.add(new JwtUserDetails(1L, "Andreivan",
-                "$2a$10$v7ZRXNqlpoZ6n5BXNnp9HOnr3bwJV8vGM0U4tZz8knuHZpPRoSXxe", "ROLE_USER_2"));
+                "$2a$10$dBwDAoXY/U4toZq6yoq8c.wNTtU7m6AreIO.mivc4m7W9kcpYRyKi", "ROLE_USER_2"));
     }
 
     @Override

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface AssetControlRepository extends MongoRepository<AssetControl, String> {
     List<AssetControl> findStringById(String id);
-    List<AssetControl> findByUsername(String username);
-    List<AssetControl> findByControlDateBetween(Date startDate, Date endDate, Sort sort);
+    List<AssetControl> findByUsername(String username, Sort sort);
+    List<AssetControl> findByUsernameAndControlDateBetween (String username, Date startDate, Date endDate, Sort sort);
 }

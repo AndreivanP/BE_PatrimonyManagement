@@ -58,13 +58,11 @@ public class AssetControlController {
     public ResponseEntity<List<AssetControl>> getAllAssetsControl(@PathVariable String username,
                                                                   @RequestParam(required = false, name = "since") Date since,
                                                                   @RequestParam(required = false, name = "till") Date till) {
-        List<AssetControl> assetControl = assetControlRepository.findByUsername(username);
-
+        Sort sort = Sort.by(Sort.Direction.DESC, "controlDate");
         if(since != null && till != null) {
-            Sort sort = Sort.by(Sort.Direction.DESC, "controlDate");
-            return new ResponseEntity<>(assetControlRepository.findByControlDateBetween(since, till, sort), HttpStatus.OK);
+            return new ResponseEntity<>(assetControlRepository.findByUsernameAndControlDateBetween(username, since, till, sort), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(assetControlRepository.findAll(Sort.by(Sort.Direction.DESC, "controlDate")), HttpStatus.OK);
+            return new ResponseEntity<>(assetControlRepository.findByUsername(username, sort), HttpStatus.OK);
         }
     }
 
