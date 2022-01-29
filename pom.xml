@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.andreivan.rest.webservices</groupId>
 	<artifactId>patrimonymanagement</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<name>patrimonymanagement</name>
 	<description>Patrimony Management App</description>
 
