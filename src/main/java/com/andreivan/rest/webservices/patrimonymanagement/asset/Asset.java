@@ -3,6 +3,7 @@ package com.andreivan.rest.webservices.patrimonymanagement.asset;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Document(collection = "asset")
@@ -17,14 +18,15 @@ public class Asset {
     private boolean is_active;
     private String username;
     private double current_value;
-    private boolean is_variable_income;
+    @NotNull(message = "Category is mandatory")
+    private AssetCategory category;
     private Date expiryDate;
 
     protected Asset() {
     }
 
     public Asset(String name, Date date, double initial_value, String company, double interest_rate, boolean is_active,
-                 String username, double current_value, boolean is_variable_income, Date expiryDate) {
+                 String username, double current_value, AssetCategory category, Date expiryDate) {
         this.name = name;
         this.date = date;
         this.initial_value = initial_value;
@@ -33,7 +35,7 @@ public class Asset {
         this.is_active = is_active;
         this.username = username;
         this.current_value = current_value;
-        this.is_variable_income = is_variable_income;
+        this.category = category;
         this.expiryDate = expiryDate;
     }
 
@@ -113,12 +115,12 @@ public class Asset {
         this.current_value = current_value;
     }
 
-    public boolean isIs_variable_income() {
-        return is_variable_income;
+    public AssetCategory getCategory() {
+        return category;
     }
 
-    public void setIs_variable_income(boolean is_variable_income) {
-        this.is_variable_income = is_variable_income;
+    public void setCategory(AssetCategory category) {
+        this.category = category;
     }
 
     @Override
@@ -133,7 +135,7 @@ public class Asset {
                 ", is_active=" + is_active +
                 ", username='" + username + '\'' +
                 ", current_value=" + current_value +
-                ", is_variable_income=" + is_variable_income +
+                ", category=" + category +
                 ", expiryDate=" + expiryDate +
                 '}';
     }

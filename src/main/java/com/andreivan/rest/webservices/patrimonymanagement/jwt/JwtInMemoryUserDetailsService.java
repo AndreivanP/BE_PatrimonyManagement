@@ -22,7 +22,7 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
                 "$2a$10$aJNhFWv/lK606iyQ43tmdOtxC7Z7nT5NkGQMZWLVmw187pYWoOdyG", "ROLE_USER_2"));
 
         inMemoryUserList.add(new JwtUserDetails(1L, "Andreivan",
-                "$2a$10$V7WzMtLiAeZNXv6fpyPV3OKfW5Aj7meyzMqExpCilMjj4PegAr37y", "ROLE_USER_2"));
+                "$2a$10$WwZjJDNstE2eR7m4wRF79OgLiTWiL9CT8irecuM..za0EFweZwYea", "ROLE_USER_2"));
     }
 
     @Override

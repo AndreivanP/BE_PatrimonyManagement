@@ -1,12 +1,14 @@
 package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
 import com.andreivan.rest.webservices.patrimonymanagement.asset.Asset;
+import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetCategory;
 import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -20,21 +22,18 @@ public class AssetControlController {
     private AssetRepository assetRepository;
 
     public double getTotalValue2(String username) {
-        List<Asset> assets = assetRepository.findByUsername(username);
-        double total = 0;
-        for (Asset asset : assets) {
-            total += asset.getCurrent_value();
-        }
-        return total;
+        return calculateTotalValue(username, null);
     }
 
     @PostMapping("users/{username}/assets-control")
-    public ResponseEntity<AssetControl> createAssetControl(@PathVariable String username) {
-            AssetControl assetControl = new AssetControl();
-            assetControl.setControlDate(new Date());
-            assetControl.setCurrentTotalValue(getTotalValue2(username));
-            assetControl.setUsername(username);
-            return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.CREATED);
+    public ResponseEntity<AssetControl> createAssetControl(@PathVariable String username,
+                                                           @RequestParam(value = "category", required = false) AssetCategory category) {
+        AssetControl assetControl = new AssetControl();
+        assetControl.setControlDate(new Date());
+        assetControl.setCurrentTotalValue(calculateTotalValue(username, category));
+        assetControl.setUsername(username);
+        assetControl.setCategory(category);
+        return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.CREATED);
     }
 
     @PostMapping("users/{username}/assets-control-custom")
@@ -57,9 +56,14 @@ public class AssetControlController {
     @GetMapping("users/{username}/assets-control")
     public ResponseEntity<List<AssetControl>> getAllAssetsControl(@PathVariable String username,
                                                                   @RequestParam(required = false, name = "since") Date since,
-                                                                  @RequestParam(required = false, name = "till") Date till) {
+                                                                  @RequestParam(required = false, name = "till") Date till,
+                                                                  @RequestParam(required = false, name = "category") AssetCategory category) {
         Sort sort = Sort.by(Sort.Direction.DESC, "controlDate");
-        if(since != null && till != null) {
+        if(category != null && since != null && till != null) {
+            return new ResponseEntity<>(assetControlRepository.findByUsernameAndCategoryAndControlDateBetween(username, category, since, till, sort), HttpStatus.OK);
+        } else if(category != null) {
+            return new ResponseEntity<>(assetControlRepository.findByUsernameAndCategory(username, category, sort), HttpStatus.OK);
+        } else if(since != null && till != null) {
             return new ResponseEntity<>(assetControlRepository.findByUsernameAndControlDateBetween(username, since, till, sort), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(assetControlRepository.findByUsername(username, sort), HttpStatus.OK);
@@ -84,5 +88,16 @@ public class AssetControlController {
         } else {
             return new ResponseEntity<>(assetControlRepository.save(assetControl), HttpStatus.OK);
         }
+    }
+
+    private double calculateTotalValue(String username, AssetCategory category) {
+        List<Asset> assets = assetRepository.findByUsername(username);
+        double total = 0;
+        for (Asset asset : assets) {
+            if (category == null || category.equals(asset.getCategory())) {
+                total += asset.getCurrent_value();
+            }
+        }
+        return total;
     }
 }

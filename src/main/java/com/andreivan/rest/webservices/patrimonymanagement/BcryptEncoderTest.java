@@ -10,7 +10,7 @@ public class BcryptEncoderTest {
 
        for(int i = 0; i <= 10; i++) {
            String encodedString = encoder.encode("123456");
-           System.out.println(encodedString);
+           System.out.println("encodedString " + encodedString);
        }
 
 

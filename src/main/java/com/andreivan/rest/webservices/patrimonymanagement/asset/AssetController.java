@@ -3,9 +3,9 @@ package com.andreivan.rest.webservices.patrimonymanagement.asset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -32,7 +32,8 @@ public class AssetController {
         double totalVariableIncome = 0;
         for (Asset asset : assets) {
             total += asset.getCurrent_value();
-            if(asset.isIs_variable_income()){
+            // Variable income categories: Ações and Criptomoedas
+            if(asset.getCategory() == AssetCategory.ACOES || asset.getCategory() == AssetCategory.CRIPTOMOEDAS){
                 totalVariableIncome += asset.getCurrent_value();
             }
         }
@@ -54,7 +55,7 @@ public class AssetController {
     }
 
     @PostMapping("users/{username}/assets")
-    public ResponseEntity<Asset> createAsset(@PathVariable String username, @RequestBody Asset asset) {
+    public ResponseEntity<Asset> createAsset(@PathVariable String username, @Valid @RequestBody Asset asset) {
         asset.setUsername(username);
         return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.CREATED);
     }
@@ -66,7 +67,7 @@ public class AssetController {
     }
 
     @PutMapping("users/{username}/assets/{id}")
-    public ResponseEntity<Asset> updateAsset(@PathVariable String username, @PathVariable(value="id") String id, @RequestBody Asset asset) {
+    public ResponseEntity<Asset> updateAsset(@PathVariable String username, @PathVariable(value="id") String id, @Valid @RequestBody Asset asset) {
         asset.setUsername(username);
         return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.OK);
     }

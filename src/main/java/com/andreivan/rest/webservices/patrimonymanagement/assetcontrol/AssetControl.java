@@ -1,5 +1,6 @@
 package com.andreivan.rest.webservices.patrimonymanagement.assetcontrol;
 
+import com.andreivan.rest.webservices.patrimonymanagement.asset.AssetCategory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ public class AssetControl {
     private Date controlDate;
     private double currentTotalValue;
     private String username;
+    private AssetCategory category;
 
     public AssetControl() {
     }
@@ -20,6 +22,13 @@ public class AssetControl {
         this.controlDate = controlDate;
         this.currentTotalValue = currentTotalValue;
         this.username = username;
+    }
+
+    public AssetControl(Date controlDate, double currentTotalValue, String username, AssetCategory category) {
+        this.controlDate = controlDate;
+        this.currentTotalValue = currentTotalValue;
+        this.username = username;
+        this.category = category;
     }
 
     public String getId() {
@@ -50,6 +59,14 @@ public class AssetControl {
         this.username = username;
     }
 
+    public AssetCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(AssetCategory category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "AssetControl{" +
@@ -57,6 +74,7 @@ public class AssetControl {
                 ", controlDate=" + controlDate +
                 ", currentTotalValue=" + currentTotalValue +
                 ", username='" + username + '\'' +
+                ", category=" + category +
                 '}';
     }
 }
