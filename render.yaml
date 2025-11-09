@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: be-patrimony-management
+    env: java
+    plan: starter
+    region: oregon
+    buildCommand: ./mvnw clean package
+    startCommand: java -jar target/asset-management-api-*.jar
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_DATA_MONGODB_URI
+        sync: false
+      - key: JWT_SIGNING_KEY_SECRET
+        sync: false
+      - key: JWT_TOKEN_EXPIRATION_IN_SECONDS
+        value: "604800"
