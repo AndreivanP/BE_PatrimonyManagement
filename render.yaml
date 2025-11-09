@@ -1,11 +1,11 @@
 services:
   - type: web
     name: be-patrimony-management
-    env: java
+    env: docker
     plan: starter
     region: oregon
-    buildCommand: ./mvnw clean package
-    startCommand: java -jar target/asset-management-api-*.jar
+    dockerfilePath: Dockerfile
+    dockerContext: .
     healthCheckPath: /actuator/health
     envVars:
       - key: SPRING_DATA_MONGODB_URI
