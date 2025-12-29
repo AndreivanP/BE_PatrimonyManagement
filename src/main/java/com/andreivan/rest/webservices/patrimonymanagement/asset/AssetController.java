@@ -18,6 +18,8 @@ public class AssetController {
 
     @Autowired
     private AssetRepository assetRepository;
+    @Autowired
+    private AssetTransactionService assetTransactionService;
 
     @GetMapping("users/{username}/assets")
     public List<Asset> getAllAssets(@PathVariable String username) {
@@ -70,5 +72,50 @@ public class AssetController {
     public ResponseEntity<Asset> updateAsset(@PathVariable String username, @PathVariable(value="id") String id, @Valid @RequestBody Asset asset) {
         asset.setUsername(username);
         return new ResponseEntity<>(assetRepository.save(asset), HttpStatus.OK);
+    }
+
+    @PostMapping("users/{username}/assets/{id}/top-up")
+    public ResponseEntity<?> topUpAsset(@PathVariable String username,
+                                        @PathVariable(value = "id") String id,
+                                        @Valid @RequestBody AssetTransactionRequest request) {
+        Asset asset = findAssetById(id);
+        if(asset == null || !asset.getUsername().equals(username)) {
+            return buildErrorResponse(HttpStatus.NOT_FOUND, "Asset not found");
+        }
+        asset.setCurrent_value(asset.getCurrent_value() + request.getAmount());
+        assetRepository.save(asset);
+        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username, request.getAmount(), AssetTransactionType.TOP_UP);
+        return new ResponseEntity<>(transaction, HttpStatus.CREATED);
+    }
+
+    @PostMapping("users/{username}/assets/{id}/withdraw")
+    public ResponseEntity<?> withdrawFromAsset(@PathVariable String username,
+                                               @PathVariable(value = "id") String id,
+                                               @Valid @RequestBody AssetTransactionRequest request) {
+        Asset asset = findAssetById(id);
+        if(asset == null || !asset.getUsername().equals(username)) {
+            return buildErrorResponse(HttpStatus.NOT_FOUND, "Asset not found");
+        }
+        if(request.getAmount() > asset.getCurrent_value()) {
+            return buildErrorResponse(HttpStatus.BAD_REQUEST, "Withdrawal amount exceeds current asset value");
+        }
+        asset.setCurrent_value(asset.getCurrent_value() - request.getAmount());
+        assetRepository.save(asset);
+        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username, request.getAmount(), AssetTransactionType.WITHDRAW);
+        return new ResponseEntity<>(transaction, HttpStatus.CREATED);
+    }
+
+    private Asset findAssetById(String id) {
+        List<Asset> assets = assetRepository.findStringById(id);
+        if(assets.isEmpty()) {
+            return null;
+        }
+        return assets.get(0);
+    }
+
+    private ResponseEntity<Map<String, String>> buildErrorResponse(HttpStatus status, String message) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, status);
     }
 }
