@@ -11,4 +11,10 @@ public interface AssetTransactionRepository extends MongoRepository<AssetTransac
     List<AssetTransaction> findByAssetIdAndTransactionDateBetweenOrderByTransactionDateDesc(String assetId,
                                                                                            Date start,
                                                                                            Date end);
+
+    List<AssetTransaction> findByUsernameOrderByTransactionDateDesc(String username);
+
+    List<AssetTransaction> findByUsernameAndTransactionDateBetweenOrderByTransactionDateDesc(String username,
+                                                                                            Date start,
+                                                                                            Date end);
 }

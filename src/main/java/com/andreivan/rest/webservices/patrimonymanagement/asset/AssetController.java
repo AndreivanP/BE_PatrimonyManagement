@@ -146,4 +146,22 @@ public class AssetController {
         }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
+
+    @GetMapping("users/{username}/transactions")
+    public ResponseEntity<List<AssetTransaction>> getTransactionsByCategory(@PathVariable String username,
+                                                                            @RequestParam(required = false) Integer month,
+                                                                            @RequestParam(required = false) Integer year) {
+        List<AssetTransaction> transactions;
+        if(month != null && year != null) {
+            if(month < 1 || month > 12) {
+                return buildErrorResponse(HttpStatus.BAD_REQUEST, "Month must be between 1 and 12");
+            }
+            Date start = TransactionDateRangeUtil.startOfMonth(year, month);
+            Date end = TransactionDateRangeUtil.endOfMonth(year, month);
+            transactions = assetTransactionRepository.findByUsernameAndTransactionDateBetweenOrderByTransactionDateDesc(username, start, end);
+        } else {
+            transactions = assetTransactionRepository.findByUsernameOrderByTransactionDateDesc(username);
+        }
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
 }
