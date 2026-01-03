@@ -14,16 +14,18 @@ public class AssetTransaction {
     private double amount;
     private Date transactionDate;
     private AssetTransactionType type;
+    private AssetCategory category;
 
     public AssetTransaction() {
     }
 
-    public AssetTransaction(String assetId, String username, double amount, Date transactionDate, AssetTransactionType type) {
+    public AssetTransaction(String assetId, String username, double amount, Date transactionDate, AssetTransactionType type, AssetCategory category) {
         this.assetId = assetId;
         this.username = username;
         this.amount = amount;
         this.transactionDate = transactionDate;
         this.type = type;
+        this.category = category;
     }
 
     public String getId() {
@@ -70,6 +72,14 @@ public class AssetTransaction {
         this.type = type;
     }
 
+    public AssetCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(AssetCategory category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "AssetTransaction{" +
@@ -79,6 +89,7 @@ public class AssetTransaction {
                 ", amount=" + amount +
                 ", transactionDate=" + transactionDate +
                 ", type=" + type +
+                ", category=" + category +
                 '}';
     }
 }

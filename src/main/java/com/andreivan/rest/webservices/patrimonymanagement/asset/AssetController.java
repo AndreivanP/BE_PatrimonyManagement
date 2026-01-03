@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class AssetController {
     private AssetRepository assetRepository;
     @Autowired
     private AssetTransactionService assetTransactionService;
+    @Autowired
+    private AssetTransactionRepository assetTransactionRepository;
 
     @GetMapping("users/{username}/assets")
     public List<Asset> getAllAssets(@PathVariable String username) {
@@ -84,7 +87,8 @@ public class AssetController {
         }
         asset.setCurrent_value(asset.getCurrent_value() + request.getAmount());
         assetRepository.save(asset);
-        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username, request.getAmount(), AssetTransactionType.TOP_UP);
+        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username,
+                request.getAmount(), AssetTransactionType.TOP_UP, asset.getCategory());
         return new ResponseEntity<>(transaction, HttpStatus.CREATED);
     }
 
@@ -101,7 +105,8 @@ public class AssetController {
         }
         asset.setCurrent_value(asset.getCurrent_value() - request.getAmount());
         assetRepository.save(asset);
-        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username, request.getAmount(), AssetTransactionType.WITHDRAW);
+        AssetTransaction transaction = assetTransactionService.recordTransaction(asset.getId(), username,
+                request.getAmount(), AssetTransactionType.WITHDRAW, asset.getCategory());
         return new ResponseEntity<>(transaction, HttpStatus.CREATED);
     }
 
@@ -117,5 +122,28 @@ public class AssetController {
         Map<String, String> response = new HashMap<>();
         response.put("message", message);
         return new ResponseEntity<>(response, status);
+    }
+
+    @GetMapping("users/{username}/assets/{assetId}/transactions")
+    public ResponseEntity<List<AssetTransaction>> getAssetTransactions(@PathVariable String username,
+                                                                       @PathVariable String assetId,
+                                                                       @RequestParam(required = false) Integer month,
+                                                                       @RequestParam(required = false) Integer year) {
+        Asset asset = findAssetById(assetId);
+        if(asset == null || !asset.getUsername().equals(username)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<AssetTransaction> transactions;
+        if(month != null && year != null) {
+            if(month < 1 || month > 12) {
+                return buildErrorResponse(HttpStatus.BAD_REQUEST, "Month must be between 1 and 12");
+            }
+            Date start = TransactionDateRangeUtil.startOfMonth(year, month);
+            Date end = TransactionDateRangeUtil.endOfMonth(year, month);
+            transactions = assetTransactionRepository.findByAssetIdAndTransactionDateBetweenOrderByTransactionDateDesc(assetId, start, end);
+        } else {
+            transactions = assetTransactionRepository.findByAssetIdOrderByTransactionDateDesc(assetId);
+        }
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 }

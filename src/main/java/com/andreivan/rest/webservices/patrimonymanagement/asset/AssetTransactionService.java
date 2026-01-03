@@ -11,13 +11,14 @@ public class AssetTransactionService {
     @Autowired
     private AssetTransactionRepository assetTransactionRepository;
 
-    public AssetTransaction recordTransaction(String assetId, String username, double amount, AssetTransactionType type) {
+    public AssetTransaction recordTransaction(String assetId, String username, double amount, AssetTransactionType type, AssetCategory category) {
         AssetTransaction transaction = new AssetTransaction();
         transaction.setAssetId(assetId);
         transaction.setUsername(username);
         transaction.setAmount(amount);
         transaction.setTransactionDate(new Date());
         transaction.setType(type);
+        transaction.setCategory(category);
         return assetTransactionRepository.save(transaction);
     }
 }
