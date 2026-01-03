@@ -125,13 +125,13 @@ public class AssetController {
     }
 
     @GetMapping("users/{username}/assets/{assetId}/transactions")
-    public ResponseEntity<List<AssetTransaction>> getAssetTransactions(@PathVariable String username,
-                                                                       @PathVariable String assetId,
-                                                                       @RequestParam(required = false) Integer month,
-                                                                       @RequestParam(required = false) Integer year) {
+    public ResponseEntity<?> getAssetTransactions(@PathVariable String username,
+                                                  @PathVariable String assetId,
+                                                  @RequestParam(required = false) Integer month,
+                                                  @RequestParam(required = false) Integer year) {
         Asset asset = findAssetById(assetId);
         if(asset == null || !asset.getUsername().equals(username)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return buildErrorResponse(HttpStatus.NOT_FOUND, "Asset not found");
         }
         List<AssetTransaction> transactions;
         if(month != null && year != null) {
@@ -148,9 +148,9 @@ public class AssetController {
     }
 
     @GetMapping("users/{username}/transactions")
-    public ResponseEntity<List<AssetTransaction>> getTransactionsByCategory(@PathVariable String username,
-                                                                            @RequestParam(required = false) Integer month,
-                                                                            @RequestParam(required = false) Integer year) {
+    public ResponseEntity<?> getTransactionsByCategory(@PathVariable String username,
+                                                       @RequestParam(required = false) Integer month,
+                                                       @RequestParam(required = false) Integer year) {
         List<AssetTransaction> transactions;
         if(month != null && year != null) {
             if(month < 1 || month > 12) {
